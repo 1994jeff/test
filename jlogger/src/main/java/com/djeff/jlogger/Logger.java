@@ -30,7 +30,7 @@ public class Logger {
         }
 
         //开启检测
-        BlockDetectByPrinter.start();
+        LogMonitor.getInstance().start();
     }
 
 }
