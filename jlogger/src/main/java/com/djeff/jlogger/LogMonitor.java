@@ -11,6 +11,8 @@ public final class LogMonitor {
     private Handler mIoHandler;
     //方法耗时的卡口,1500毫秒
     private static long TIME_BLOCK = 1500L;
+    //调用链方法数
+    private static int method_call_length = 20;
 
     private LogMonitor() {
         HandlerThread logThread = new HandlerThread("log");
@@ -23,12 +25,24 @@ public final class LogMonitor {
         public void run() {
             //打印出执行的耗时方法的栈消息
             StringBuilder sb = new StringBuilder();
+            sb.append("\n\n Method stack call time use more than ").append(TIME_BLOCK).append("ms \n");
             StackTraceElement[] stackTrace = Looper.getMainLooper().getThread().getStackTrace();
-            for (StackTraceElement s : stackTrace) {
-                sb.append(s.toString());
-                sb.append("\n");
+
+            //当调用栈过长时，截取最后调用的method_call_length个方法
+            if(stackTrace.length > method_call_length){
+                for(int i=0;i<method_call_length;i++){
+                    sb.append(stackTrace[i].toString());
+                    sb.append("\n");
+                }
+                sb.append("......");
+            }else {
+                for (StackTraceElement s : stackTrace) {
+                    sb.append(s.toString());
+                    sb.append("\n");
+                }
             }
-            Log.e(TAG, sb.toString());
+
+            Log.e(TAG, sb.append("\n\n").toString());
         }
     };
 
@@ -57,5 +71,17 @@ public final class LogMonitor {
      */
     public void setMethodBlockTime(long time) {
         TIME_BLOCK = time;
+    }
+
+    /**
+     * 设置打印的方法调用链长度
+     * @param methodCallLength 默认为20
+     */
+    public void setMethodCallLength(int methodCallLength){
+        method_call_length = methodCallLength;
+    }
+
+    public int getMethodCallLength() {
+        return method_call_length;
     }
 }
