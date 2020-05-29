@@ -25,5 +25,7 @@ dependencies {
 
 Step 3.Use Logger
 
-//在应用启动Application类中调用如下方法
+
+//在应用启动Application类中调用
+
 Logger.getInstance().detectBlockMethod(1600,25);
