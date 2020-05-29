@@ -54,4 +54,4 @@ Logger.getInstance().detectBlockMethod(1600,25);
     com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:524)
     com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1034)
     
-可以很方便的定位主线程耗时问题
+可以很方便的定位主线程耗时问题，或者利用这个拿来做App优化，包括启动时间优化，跳转的耗时优化等
